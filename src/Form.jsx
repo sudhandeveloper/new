@@ -69,9 +69,16 @@ export default function ResponsiveDrawer(props) {
   const [dispdata, setDispdata] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
+  const [errors, setErrors] = useState({
+    email: "",
+    age: "",
+    employmentRole: "",
+  });
+
   const handleOnchanges = (e) => {
     setUploaddata({ ...uploaddata, [e.target.name]: e.target.value });
   };
+
   const addData = async () => {
     return axios
       .post("http://localhost:8080/users", uploaddata)
@@ -115,28 +122,89 @@ export default function ResponsiveDrawer(props) {
       });
   };
   // =================================
+  const handleEdit = (id) => {
+    setEditingId(id);
+    setUploaddata(dispdata.find((user) => user.id === id)); // Pre-populate form with user data
+  };
 
-  const handleUpdateData = async (id) => {
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setUploaddata({ name: "", age: "", employmentRole: "" }); // Reset form data
+  };
+
+  // const handleUpdateData = async () => {
+  //   if (editingId) {
+  //     const updatedUser = { ...setUploaddata, id: editingId };
+  //     axios
+  //       .put(`http://localhost:8080/users/${editingId}`, updatedUser)
+  //       .then((response) => {
+  //         setDispdata((prevData) =>
+  //           prevData.map((user) =>
+  //             user.id === editingId ? response.data : user
+  //           )
+  //         );
+  //         setEditingId(null);
+  //         setUploaddata({ name: "", age: "", employmentRole: "" });
+  //       })
+
+  //       .catch((error) => {
+  //         console.error("Error updating data:", error);
+  //         throw error;
+  //       });
+  //   }
+  // };
+
+  const handleUpdate = async () => {
+    const updatedUser = { ...uploaddata };
+
     return axios
-      .put(`http://localhost:8080/users/${id}`, dispdata)
-      .then((response) => response.data)
+      .put(`http://localhost:8080/users/${editingId}`, updatedUser)
+      .then((response) => {
+        const updatedData = response.data;
+
+        // Update dispdata with the updated user
+        setDispdata((prevData) =>
+          prevData.map((user) => (user.id === editingId ? updatedData : user))
+        );
+
+        setEditingId(null);
+        setUploaddata({ name: "", age: "", employmentRole: "" }); // Reset form data
+      })
       .catch((error) => {
         console.error("Error updating data:", error);
-        throw error;
+        // Handle errors appropriately (e.g., display error message to user)
       });
   };
 
-  // const handleOpen = (id) => {
-   
-  //   setEditingId(id);
-  //   const item = dispdata.find((row) => row.id === id);
-   
-   
-  // };
-  
-  const submite = () => {
-    addData();
+  const submite = async () => {
+    let newErrors = {};
+
+    if (!uploaddata.name) {
+      newErrors.name = "name is required";
+    }
+
+    if (!uploaddata.age) {
+      newErrors.age = "age is required";
+    }
+
+    if (!uploaddata.employmentRole) {
+      newErrors.employmentRole = "employmentRole is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors({ ...newErrors });
+      return false; // Validation failed
+    }
+    try {
+      await addData();
+    } catch (error) {
+      console.error("Error adding data:", error);
+    }
+
+    setErrors({}); 
+    return true; 
   };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -207,43 +275,98 @@ export default function ResponsiveDrawer(props) {
               <ListItem>
                 <TextField
                   id="outlined-basic"
-                  label="Name"
+                  placeholder="Name"
                   variant="outlined"
+                  error={errors.name}
                   name="name"
-                  value={uploaddata.name }
+                  value={uploaddata.name}
                   onChange={handleOnchanges}
                 />
               </ListItem>
+              {errors.name && (
+                <Typography
+                  sx={{ paddingLeft: 3 }}
+                  variant="caption"
+                  color="error"
+                >
+                  {errors.name}
+                </Typography>
+              )}
             </List>
+
             <List>
               <ListItem>
                 <TextField
                   id="outlined-basic"
-                  label="Age"
+                  placeholder="Age"
                   variant="outlined"
                   name="age"
+                  error={errors.age}
                   value={uploaddata.age}
                   onChange={handleOnchanges}
                 />
               </ListItem>
+              {errors.age && (
+                <Typography
+                  sx={{ paddingLeft: 3 }}
+                  variant="caption"
+                  color="error"
+                >
+                  {errors.age}
+                </Typography>
+              )}
             </List>
             <List>
               <ListItem>
                 <TextField
                   id="outlined-basic"
-                  label="Employment Role"
+                  placeholder="Employment Role"
                   variant="outlined"
                   name="employmentRole"
+                  error={errors.employmentRole}
                   value={uploaddata.employmentRole}
                   onChange={handleOnchanges}
                 />
               </ListItem>
+              {errors.employmentRole && (
+                <Typography
+                  sx={{ paddingLeft: 3 }}
+                  variant="caption"
+                  color="error"
+                >
+                  {errors.employmentRole}
+                </Typography>
+              )}
             </List>
             <List>
               <ListItem>
-                <Button variant="contained" onClick={submite}>
+                <ListItem>
+                  {editingId ? ( // Show update button if editing
+                    <Button
+                      variant="contained"
+                      type="button"
+                      onClick={handleUpdate}
+                    >
+                      Update
+                    </Button>
+                  ) : (
+                    <Button variant="contained" type="submit" onClick={submite}>
+                      Submit
+                    </Button> // Show submit button for adding
+                  )}
+                  {editingId && ( // Show cancel button only when editing
+                    <Button
+                      variant="contained"
+                      type="button"
+                      onClick={handleCancelEdit}
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                  {/* <Button variant="contained" onClick={submite}>
                   Submite
-                </Button>
+                </Button> */}
+                </ListItem>
               </ListItem>
             </List>
           </div>
@@ -289,7 +412,7 @@ export default function ResponsiveDrawer(props) {
                     <IconButton
                       aria-label="delete"
                       size="small"
-                      onClick={() => handleUpdateData(row.id)}
+                      onClick={() => handleEdit(row.id)}
                     >
                       <EditIcon fontSize="inherit" />
                     </IconButton>
