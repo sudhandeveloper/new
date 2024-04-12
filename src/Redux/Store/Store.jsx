@@ -4,7 +4,7 @@ import formSliceReducer from "../AllSlices/Formslices/SliceOne";
 
 export const store = configureStore({
   reducer: {
-    form: formSliceReducer,
+    formdata: formSliceReducer,
     user: userReducer,
   },
 });

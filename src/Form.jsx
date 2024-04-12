@@ -1,14 +1,11 @@
 import * as React from "react";
 import {
   styled,
-  Grid,
+
   Paper,
-  Autocomplete,
+
   TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  FormLabel,
+
   Button,
   Table,
   TableBody,
@@ -17,7 +14,7 @@ import {
   TableHead,
   TableRow,
   tableCellClasses,
-  Modal,
+  
 } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -38,23 +35,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { updateUserAge } from "./Redux/AllSlices/dataslice";
+
+import FormTwo from "./Form-two";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { updateUserAge } from "./Redux/AllSlices/dataslice";
-import { setInputValue } from "./Redux/AllSlices/Formslices/SliceOne";
 
 const drawerWidth = 240;
 
 export default function ResponsiveDrawer(props) {
   const user = useSelector((state) => state.user.value);
-  const formData = useSelector((state) => state.form.formData);
-
   const dispatch = useDispatch();
 
-  const onchange = (e) => {
-    const { name, value } = e.target; // Destructure event target
-    dispatch(setInputValue({ field: name, value }));
-  };
+
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -446,38 +439,8 @@ export default function ResponsiveDrawer(props) {
             <li>{user.email}</li>
             <Button onClick={() => dispatch(updateUserAge())}>increment</Button>
           </ul>
-
-          <TextField
-            id="outlined-basic"
-            placeholder="Age"
-            variant="outlined"
-            name="name"
-            value={formData.name}
-            onChange={onchange}
-          />
-          {formData.name && ( // Only display content if formData.sudhan exists
-            <p>The value of sudhan is: {formData.name}</p>
-          )}
-
-          <TextField
-            id="outlined-basic"
-            placeholder="name"
-            variant="outlined"
-            name="name"
-            value={formData.name}
-            onChange={onchange}
-          />
-  
-          <TextField
-            id="outlined-basic"
-            placeholder="age"
-            variant="outlined"
-            name="age"
-            value={formData.age}
-            onChange={onchange}
-          />
-         <p>Name: {formData.name}</p>
-      <p>Age: {formData.age}</p>
+<FormTwo/>
+          
         </Box>
       </Box>
 
