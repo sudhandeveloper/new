@@ -1,22 +1,16 @@
 {
   "users": [
     {
-      "id": "7f0b",
-      "name": "Sudharshan M",
-      "age": "22",
-      "employmentRole": "Front end develoeper"
+      "id": "ed31",
+      "name": "Arun",
+      "age": "23",
+      "employmentRole": "Front end developer"
     },
     {
-      "id": "5607",
-      "name": "Sudharshan M",
-      "age": "22",
+      "id": "f5f3",
+      "name": "sudhan",
+      "age": "23",
       "employmentRole": "Front end "
-    },
-    {
-      "id": "4fbb",
-      "name": "Sudharshan M",
-      "age": "22",
-      "employmentRole": "ewfwef"
     }
   ]
 }

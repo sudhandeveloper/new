@@ -13,14 +13,15 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useAuth } from "./context";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+
+
 
 const Login = () => {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -42,24 +43,17 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Perform validation
     let newErrors = {};
-
-    // Email validation
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
-
-    // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters long";
     }
-
     // if (Object.keys(newErrors).length > 0) {
     //   setErrors(newErrors);
     // } else {
@@ -105,11 +99,11 @@ const Login = () => {
       {" "}
       <Box
         sx={{
-          minHeight: '100vh' ,
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-         
+
           background: "-webkit-linear-gradient(left, #E9278F, #8A3A93)",
         }}
       >
@@ -300,6 +294,10 @@ const Login = () => {
           </Box>
         </Card>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+        {/* ==================== */}
+        {/* <h2>Counter:{counter}</h2>
+        <Button onClick={() => dispatch(increment())}></Button>
+        <Button onClick={() => dispatch(decrement())}></Button> */}
       </Box>
     </>
   );
