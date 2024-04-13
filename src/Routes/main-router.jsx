@@ -7,7 +7,7 @@ import Leads from "../Dashborad/Leads";
 import SettingsPage from "../Dashborad/SettingsPage";
 import EnrollmentPage from "../Dashborad/EnrollmentPage";
 import Login from "../auth-pages/Mainpage";
-import Form from "../Form";
+import Form from "../crudForms/Form";
 
 export const router = createBrowserRouter([
   {

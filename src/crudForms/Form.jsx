@@ -1,11 +1,8 @@
 import * as React from "react";
 import {
   styled,
-
   Paper,
-
   TextField,
-
   Button,
   Table,
   TableBody,
@@ -14,7 +11,6 @@ import {
   TableHead,
   TableRow,
   tableCellClasses,
-  
 } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -35,19 +31,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { updateUserAge } from "./Redux/AllSlices/dataslice";
 
-import FormTwo from "./Form-two";
+import { updateUserAge } from "../Redux/AllSlices/dataslice";
+import FormTwo from "./components/Form-two";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import Formtwocomponent from "./components/Formtwocomponent";
 
 const drawerWidth = 240;
 
 export default function ResponsiveDrawer(props) {
-  const user = useSelector((state) => state.user.value);
-  const dispatch = useDispatch();
-
-
+  // const user = useSelector((state) => state.user.value);
+  // const dispatch = useDispatch();
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -347,6 +342,7 @@ export default function ResponsiveDrawer(props) {
                 </Typography>
               )}
             </List>
+
             <List>
               <ListItem>
                 <ListItem>
@@ -377,6 +373,12 @@ export default function ResponsiveDrawer(props) {
                   Submite
                 </Button> */}
                 </ListItem>
+              </ListItem>
+            </List>
+            {/* ======================Form Two ===============*/}
+            <List>
+              <ListItem>
+                <FormTwo />
               </ListItem>
             </List>
           </div>
@@ -432,16 +434,18 @@ export default function ResponsiveDrawer(props) {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box sx={{ padding: 20 }}>
+        {/* ===== ==========================================*/}
+        <Formtwocomponent />
+
+        <Box></Box>
+        {/* <Box sx={{ padding: 20 }}>
           <ul>
             <li>{user.name}</li>
             <li>{user.age}</li>
             <li>{user.email}</li>
             <Button onClick={() => dispatch(updateUserAge())}>increment</Button>
           </ul>
-<FormTwo/>
-          
-        </Box>
+        </Box> */}
       </Box>
 
       {/* {formdata.map((item) => {

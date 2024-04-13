@@ -1,19 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  values: {
-    name: 'sfvfdv',
-    age: '',
-  },
-
+  formData: {},
 };
 export const formSlice = createSlice({
-  name: "formdata",
+  name: "userdata",
   initialState,
   reducers: {
     setInputValue: (state, action) => {
-      const { fieldName, value } = action.payload;
-      state.formdata[fieldName] = value;
-
+      const { field, value } = action.payload;
+      state.formData[field] = value;
     },
   },
 });
