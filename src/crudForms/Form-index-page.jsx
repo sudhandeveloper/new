@@ -33,10 +33,10 @@ import axios from "axios";
 import { useEffect } from "react";
 
 import { updateUserAge } from "../Redux/AllSlices/dataslice";
-import FormTwo from "./components/Form-two";
+import FormTwo from "./components/Form-two-inputs";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import Formtwocomponent from "./components/Formtwocomponent";
+import Formtwocomponent from "./components/Fromtwo-list";
 
 const drawerWidth = 240;
 
@@ -93,7 +93,7 @@ export default function ResponsiveDrawer(props) {
           age: "",
           employmentRole: "",
         });
-        setTimeout(fetchData, 500);
+        // setTimeout(fetchData, 500);
       })
       .catch((error) => {
         console.error("Error adding data:", error);
@@ -101,24 +101,24 @@ export default function ResponsiveDrawer(props) {
       });
   };
 
-  const fetchData = async () => {
-    return axios
-      .get("http://localhost:8080/users")
-      .then((response) => setDispdata(response.data))
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        throw error;
-      });
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchData = async () => {
+  //   return axios
+  //     .get("http://localhost:8080/users")
+  //     .then((response) => setDispdata(response.data))
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //       throw error;
+  //     });
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   // =============================
   const handleDelete = async (id) => {
     return axios
       .delete(`http://localhost:8080/users/${id}`)
       .then(() => {
-        fetchData();
+        // fetchData();
       })
       .catch((error) => {
         console.error("Error deleting data:", error);
@@ -436,9 +436,9 @@ export default function ResponsiveDrawer(props) {
         </TableContainer>
         {/* ===== ==========================================*/}
         <Formtwocomponent />
-
+        {/*
         <Box></Box>
-        {/* <Box sx={{ padding: 20 }}>
+        <Box sx={{ padding: 20 }}>
           <ul>
             <li>{user.name}</li>
             <li>{user.age}</li>
