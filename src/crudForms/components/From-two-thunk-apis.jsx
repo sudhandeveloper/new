@@ -16,7 +16,7 @@ export const deleteThunk = createAsyncThunk("data/deleteData", async (id) => {
   return response.data;
 });
 
-export const editeThunk = createAsyncThunk("data/EDITData", async (id,updateuser) => {
-  const response = await axios.put(`http://localhost:8080/users/${id}`,updateuser);
+export const editeThunk = createAsyncThunk("data/EDITData", async ({ id, updateuser }) => {
+  const response = await axios.put(`http://localhost:8080/users/${id}`, updateuser);
   return response.data;
 });
