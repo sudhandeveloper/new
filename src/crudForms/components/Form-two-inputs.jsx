@@ -88,6 +88,8 @@ const FormTwo = () => {
       });
   };
 
+
+
   return (
     <Box>
         <ToastContainer />
@@ -128,7 +130,7 @@ const FormTwo = () => {
         error={!!validationErrors.role}
         helperText={validationErrors.role}
       />
-      {editingUserId ? ( // Show update button if editing
+      <Box sx={{marginTop:"20px"}}>      {editingUserId ? (   // Show update button if editing
         <>
           <Button variant="contained" type="button" onClick={handleUpdate}>
             Update
@@ -146,7 +148,8 @@ const FormTwo = () => {
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button> // Show submit button for adding
-      )}
+      )} </Box>
+
     </Box>
   );
 };
