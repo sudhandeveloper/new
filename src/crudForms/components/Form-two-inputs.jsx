@@ -17,6 +17,7 @@ import {
   updateEditedUser,
 } from "../../Redux/AllSlices/Formslices/SliceOne";
 //  API START //
+
 import { editeThunk, postThunk } from "./From-two-thunk-apis";
 import { toast } from "react-toastify";
 
@@ -27,7 +28,9 @@ const FormTwo = () => {
   const name = useSelector((state) => state.userdata?.formData?.name);
   const age = useSelector((state) => state.userdata?.formData?.age);
   const role = useSelector((state) => state.userdata?.formData?.role);
-  const { error, editingUserId,validationErrors } = useSelector((state) => state.userdata); // Access error state
+  const { error, editingUserId, validationErrors } = useSelector(
+    (state) => state.userdata
+  ); // Access error state
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (event) => {
@@ -38,9 +41,18 @@ const FormTwo = () => {
 
   const handleSubmit = () => {
     if (!name || !age || !role) {
-      if (!name) dispatch(setValidationError({ field: "name", message: "Name is required" }));
-      if (!age) dispatch(setValidationError({ field: "age", message: "Age is required" }));
-      if (!role) dispatch(setValidationError({ field: "role", message: "Role is required" }));
+      if (!name)
+        dispatch(
+          setValidationError({ field: "name", message: "Name is required" })
+        );
+      if (!age)
+        dispatch(
+          setValidationError({ field: "age", message: "Age is required" })
+        );
+      if (!role)
+        dispatch(
+          setValidationError({ field: "role", message: "Role is required" })
+        );
       return;
     }
 
@@ -50,7 +62,7 @@ const FormTwo = () => {
         setSubmitted(true);
         dispatch(clearInputFields());
         toast.success("Successfully to submit data! ", {
-          position: "top-center"
+          position: "top-center",
         });
       })
       .catch((err) => {
@@ -66,9 +78,18 @@ const FormTwo = () => {
   const handleUpdate = () => {
     // Validate inputs before dispatching editeThunk
     if (!name || !age || !role) {
-      if (!name) dispatch(setValidationError({ field: "name", message: "Name is required" }));
-      if (!age) dispatch(setValidationError({ field: "age", message: "Age is required" }));
-      if (!role) dispatch(setValidationError({ field: "role", message: "Role is required" }));
+      if (!name)
+        dispatch(
+          setValidationError({ field: "name", message: "Name is required" })
+        );
+      if (!age)
+        dispatch(
+          setValidationError({ field: "age", message: "Age is required" })
+        );
+      if (!role)
+        dispatch(
+          setValidationError({ field: "role", message: "Role is required" })
+        );
       return;
     }
 
@@ -77,10 +98,8 @@ const FormTwo = () => {
       .then(() => {
         dispatch(cancelEditUser());
         toast.success("Successfully to edited data!", {
-          position: "top-center"
+          position: "top-center",
         });
-  
-        
       })
       .catch((err) => {
         console.error("Error updating data:", err);
@@ -88,11 +107,9 @@ const FormTwo = () => {
       });
   };
 
-
-
   return (
     <Box>
-        <ToastContainer />
+      <ToastContainer />
       <Typography variant="h6" color="initial">
         FORM TWO
       </Typography>
@@ -103,10 +120,9 @@ const FormTwo = () => {
         value={name}
         onChange={handleChange}
         error={!!validationErrors.name}
-       
         helperText={validationErrors.name}
       />
-      
+
       <Divider />
       <br />
       <TextField
@@ -126,30 +142,31 @@ const FormTwo = () => {
         name="role"
         value={role}
         onChange={handleChange}
-      
         error={!!validationErrors.role}
         helperText={validationErrors.role}
       />
-      <Box sx={{marginTop:"20px"}}>      {editingUserId ? (   // Show update button if editing
-        <>
-          <Button variant="contained" type="button" onClick={handleUpdate}>
-            Update
-          </Button>
-          <Button
-            variant="contained"
-            type="button"
-            onClick={handleCancelEdit}
-            sx={{ marginLeft: 2 }}
-          >
-            Cancel
-          </Button>
-        </>
-      ) : (
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button> // Show submit button for adding
-      )} </Box>
-
+      <Box sx={{ marginTop: "20px" }}>
+        {" "}
+        {editingUserId ? ( // Show update button if editing
+          <>
+            <Button variant="contained" type="button" onClick={handleUpdate}>
+              Update
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              onClick={handleCancelEdit}
+              sx={{ marginLeft: 1 }}
+            >
+              Cancel
+            </Button>
+          </>
+        ) : (
+          <Button variant="contained" type="submit" onClick={handleSubmit}>
+            Submit
+          </Button> // Show submit button for adding
+        )}{" "}
+      </Box>
     </Box>
   );
 };
